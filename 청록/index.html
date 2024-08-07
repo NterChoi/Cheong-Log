@@ -57,7 +57,7 @@
             border-top: 1px solid white;
             border-bottom: 1px solid white;
         }
-        
+
         .menubtn:hover {
             background-color: rgb(0, 59, 110);
             border: 1px solid white;
@@ -201,8 +201,8 @@
                 'membername': membername,
                 'mbti': mbti,
                 'comment': comment,
-                'blogaddr' : blogaddr,
-                'githubaddr' : githubaddr
+                'blogaddr': blogaddr,
+                'githubaddr': githubaddr
             };
             await addDoc(collection(db, "members"), doc);
             alert('저장 완료');
@@ -212,16 +212,11 @@
         let docs = await getDocs(collection(db, "members"));
         docs.forEach((doc) => {
             let row = doc.data();
-            let image = row['image'];
-            let membername = row['membername'];
-            let mbti = row['mbti'];
-            let comment = row['comment'];
-            let blogaddr = row['blogaddr'];
-            let githubaddr = row['githubaddr'];
+            let {image,membername,mbti,comment,blogaddr,githubaddr} = row;
 
             let temp_html = `
             <div class="col">
-                <div class="card">
+                <div class="card" href="index.html">
                     <img src="${image}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${membername}</h5>
@@ -231,7 +226,28 @@
                 </div>
             </div>`;
             $('#card').append(temp_html);
+
+
+            let temp_html2 = `<div class="container">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-4">
+                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
+                        class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
+                        loading="lazy">
+                </div>
+                <div class="col-lg-8">
+                    <h1 class="display-0 fw-bold text-body-emphasis lh-0 mb-22">${membername}</h1>
+                    <p class="lead">${mbti}</p>
+                    <p class="lead">${comment}</p>
+                    <p class="lead">${blogaddr}</p>
+                    <p class="lead">${githubaddr}</p>
+                </div>
+            </div>
+        </div>
+        `;
+        $('#memberIntro').append(temp_html2);
         });
+
     </script>
 </head>
 
@@ -251,7 +267,7 @@
         <button class="menubtn" id="joinBtn">Join</button>
     </div>
 
-    
+
     <div class="joinbox" id="joinbox" style="display: none;">
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="image" placeholder="이미지링크">
@@ -323,22 +339,6 @@
     </div>
 
     <div class="memberIntro" id="memberIntro" style="display: none;">
-        <div class="container">
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                <div class="col-4">
-                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
-                        class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
-                        loading="lazy">
-                </div>
-                <div class="col-lg-8">
-                    <h1 class="display-0 fw-bold text-body-emphasis lh-0 mb-22">이 름</h1>
-                    <p class="lead">MBTI</p>
-                    <p class="lead">한마디</p>
-                    <p class="lead">블로그</p>
-                    <p class="lead">GitHub</p>
-                </div>
-            </div>
-        </div>
     </div>
 
 </body>
