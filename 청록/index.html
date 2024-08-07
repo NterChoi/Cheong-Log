@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청록</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+
+        * {
+            font-family: "Gowun Dodum", sans-serif;
+        }
+
+        .main-title {
+            font-family: "Nanum Pen Script", cursive;
+            font-size: 160px;
+            font-weight: bold;
+            color: rgb(60, 219, 203);
+
+            text-shadow: -2px 2px black,
+                -2px -2px black,
+                2px 2px black,
+                2px -2px black;
+
+        }
+
+        .main {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mXrz51OJcWgpAFWwPgZD3wrfIsmLlZtMPwjBytEZt2XCZa3l0KydafoVYstFW15h7WA&usqp=CAU');
+            background-position: center;
+            background-size: cover;
+            height: 300px;
+        }
+
+        .lead {
+            font-size: 24px;
+        }
+
+        .menu {
+            height: 72px;
+        }
+
+        .menubtn {
+            background-color: rgb(0, 87, 79);
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            width: 33%;
+            height: 72px;
+            border-radius: 8px;
+            margin: 1px auto 1px 1px;
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+        }
+        
+        .menubtn:hover {
+            background-color: rgb(0, 59, 110);
+            border: 1px solid white;
+        }
+
+        body {
+            background-color: rgb(44, 102, 102);
+        }
+
+        .teamIntro {
+            background-color: rgba(127, 255, 212, 0.801);
+        }
+
+        .memberIntro {
+            background-color: gray;
+            margin: auto 20px auto 20px;
+        }
+
+        .mycards {
+            width: 1200px;
+            height: 500px;
+            margin: 20px auto 20px auto;
+        }
+
+        .joinbox {
+            background-color: white;
+            font-size: 24px;
+            width: 600px;
+            margin: 20px auto 20px auto;
+            padding: 20px 20px 20px 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px 0px rgb(0, 255, 157);
+        }
+    </style>
+
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Firebase 구성 정보 설정
+        const firebaseConfig = {
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+            apiKey: "AIzaSyChSZEVCDP-hbNSdDV4JslCySMOlPBTypw",
+            authDomain: "sparta-1c219.firebaseapp.com",
+            projectId: "sparta-1c219",
+            storageBucket: "sparta-1c219.appspot.com",
+            messagingSenderId: "950146459361",
+            appId: "1:950146459361:web:5ad658bf397e191972f9a0",
+            measurementId: "G-HG5R2FFPGJ"
+
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //초기 화면 div display 세팅 (팀 소개 이외 none)
+        const ti = document.getElementById('teamIntro');
+        const mc = document.getElementById('mycards');
+        const mi = document.getElementById('memberIntro');
+        const jo = document.getElementById('joinbox');
+
+        if (mc.style.display !== 'none') {
+            mc.style.display = 'none';
+        }
+        if (mi.style.display !== 'none') {
+            mi.style.display = 'none';
+        }
+        if (ti.style.display == 'none') {
+
+            ti.style.display = 'block';
+        }
+        if (jo.style.display !== 'none') {
+            jo.style.display = 'none';
+        }
+        //메뉴 버튼 온클릭 이벤트 (각 항목 display속성 변경)
+        $("#teamBtn").click(async function () {
+            if (mc.style.display !== 'none') {
+                mc.style.display = 'none';
+            }
+            if (mi.style.display !== 'none') {
+                mi.style.display = 'none';
+            }
+            if (jo.style.display !== 'none') {
+                jo.style.display = 'none';
+            }
+            if (ti.style.display == 'none') {
+                ti.style.display = 'block';
+            }
+        })
+        $("#memberBtn").click(async function () {
+            if (ti.style.display !== 'none') {
+                ti.style.display = 'none';
+            }
+            if (mi.style.display !== 'none') {
+                mi.style.display = 'none';
+            }
+            if (jo.style.display !== 'none') {
+                jo.style.display = 'none';
+            }
+            if (mc.style.display == 'none') {
+                mc.style.display = 'block';
+            }
+        })
+        $("#joinBtn").click(async function () {
+            if (ti.style.display !== 'none') {
+                ti.style.display = 'none';
+            }
+            if (mi.style.display !== 'none') {
+                mi.style.display = 'none';
+            }
+            if (mc.style.display !== 'none') {
+                mc.style.display = 'none';
+            }
+            if (jo.style.display == 'none') {
+                jo.style.display = 'block';
+            }
+        })
+
+        $("#membercard").click(async function () {
+            if (mi.style.display == 'none') {
+                mi.style.display = 'block';
+            }
+        })
+
+        //db 저장
+        $("#sign-in-btn").click(async function () {
+            let image = $('#image').val();
+            let membername = $('#membername').val();
+            let mbti = $('#mbti').val();
+            let comment = $('#comment').val();
+            let blogaddr = $('#blogaddr').val();
+            let githubaddr = $('#githubaddr').val();
+
+            let doc = {
+                'image': image,
+                'membername': membername,
+                'mbti': mbti,
+                'comment': comment,
+                'blogaddr' : blogaddr,
+                'githubaddr' : githubaddr
+            };
+            await addDoc(collection(db, "members"), doc);
+            alert('저장 완료');
+            window.location.reload();
+        })
+        //db 읽어오기
+        let docs = await getDocs(collection(db, "members"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            let image = row['image'];
+            let membername = row['membername'];
+            let mbti = row['mbti'];
+            let comment = row['comment'];
+            let blogaddr = row['blogaddr'];
+            let githubaddr = row['githubaddr'];
+
+            let temp_html = `
+            <div class="col">
+                <div class="card">
+                    <img src="${image}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${membername}</h5>
+                        <p class="card-mbti">${mbti}</p>
+                        <p class="card-text">${comment}</p>
+                    </div>
+                </div>
+            </div>`;
+            $('#card').append(temp_html);
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="mb-0 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="main-title">청록</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu">
+        <button class="menubtn" id="teamBtn">Team</button>
+        <button class="menubtn" id="memberBtn">Member</button>
+        <button class="menubtn" id="joinBtn">Join</button>
+    </div>
+
+    
+    <div class="joinbox" id="joinbox" style="display: none;">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="image" placeholder="이미지링크">
+            <label for="floatingInput">이미지링크</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="membername" placeholder="이름">
+            <label for="floatingInput">이름</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="mbti" placeholder="MBTI">
+            <label for="floatingInput">MBTI</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="comment" placeholder="한마디">
+            <label for="floatingInput">한마디</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="blogaddr" placeholder="블로그">
+            <label for="floatingTextarea">블로그</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="githubaddr" placeholder="깃허브">
+            <label for="floatingInput">깃허브</label>
+        </div>
+        <div>
+            <button id="sign-in-btn" type="button" class="btn btn-dark">합류하기</button>
+            <button id="joincloseBtn" type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+    </div>
+
+    <div class="teamIntro" id="teamIntro">
+        <div class="container col-xxl-8 py-1">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-4">
+                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
+                        class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
+                        loading="lazy">
+                </div>
+                <div class="col-lg-8">
+                    <h1 class="display-1 fw-bold">청 록</h1>
+                    <p class="display-4">Ground Rules</p>
+                    <p class="lead">- 소통 잘하고 상처 받는 말 하지 말기.</p>
+                    <p class="lead">- 피드백을 요청하면 긍정/부정에 관계 없이 확실하게 답변하기.
+                    </p>
+                    <p class="lead">- 누구 한명이라도 모르는 것이 있으면 짚고 넘어가기.
+                    </p>
+                    <p class="lead">- 모르는 내용이 있다면 제일 먼저 검색 후 그래도 모른다면 튜터님 혹은 팀원에게 물어보기.
+                    </p>
+                    <p class="lead">- 정보 공유를 잘하기.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mycards" id="mycards" style="display: none;">
+        <div id="card" class="row row-cols-1 row-cols-md-5 g-4">
+            <div class="col">
+                <div class="card" id="membercard">
+                    <img src="C:\Users\twr96\OneDrive\바탕 화면\sparta\청록\testimg.PNG" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">이름</h5>
+                        <p class="card-mbti">MBTI</p>
+                        <p class="card-text">한마디</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="memberIntro" id="memberIntro" style="display: none;">
+        <div class="container">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-4">
+                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
+                        class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
+                        loading="lazy">
+                </div>
+                <div class="col-lg-8">
+                    <h1 class="display-0 fw-bold text-body-emphasis lh-0 mb-22">이 름</h1>
+                    <p class="lead">MBTI</p>
+                    <p class="lead">한마디</p>
+                    <p class="lead">블로그</p>
+                    <p class="lead">GitHub</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
