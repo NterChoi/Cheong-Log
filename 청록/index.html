@@ -94,6 +94,8 @@
     </style>
 
     <script type="module">
+
+
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -181,12 +183,6 @@
             }
         })
 
-        $("#membercard").click(async function () {
-            if (mi.style.display == 'none') {
-                mi.style.display = 'block';
-            }
-        })
-
         //db 저장
         $("#sign-in-btn").click(async function () {
             let image = $('#image').val();
@@ -208,15 +204,17 @@
             alert('저장 완료');
             window.location.reload();
         })
+
         //db 읽어오기
         let docs = await getDocs(collection(db, "members"));
+        let count = 0;
         docs.forEach((doc) => {
             let row = doc.data();
             let {image,membername,mbti,comment,blogaddr,githubaddr} = row;
 
             let temp_html = `
             <div class="col">
-                <div class="card" href="index.html">
+                <div class="card" id="membercard${count}">
                     <img src="${image}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${membername}</h5>
@@ -228,7 +226,8 @@
             $('#card').append(temp_html);
 
 
-            let temp_html2 = `<div class="container">
+            let temp_html2 = `
+            <div class="container" id = "memberintro${count}">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-4">
                     <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
@@ -246,8 +245,17 @@
         </div>
         `;
         $('#memberIntro').append(temp_html2);
+        count++;
         });
 
+        $(document).ready(function(){
+            for(let i = 0 ; i < count; i++) {
+                $("#membercard" + i).click(async function () {
+                if (mi.style.display == 'none') {
+                mi.style.display = 'block';
+              }});
+            }         
+        });
     </script>
 </head>
 
