@@ -73,7 +73,11 @@
 
         .memberIntro {
             background-color: gray;
-            margin: auto 20px auto 20px;
+            margin: auto 20px 20px 20px;
+        }
+
+        .memberIntro>p {
+            margin-bottom: 10px;
         }
 
         .mycards {
@@ -181,10 +185,45 @@
             }
         })
 
-        $(document).on("click", "#membercard", function () {
+        $(document).on("click", "#membercard",async function (evnet) {
+            let docs = await getDocs(collection(db, "members"));
             if (mi.style.display == 'none') {
                 mi.style.display = 'block';
             }
+            var name = $(this).text();
+            alert(name);
+            /*
+            let row = docs.collection.
+            let image = row['image'];
+            let membername = row['membername'];
+            let mbti = row['mbti'];
+            let comment = row['comment'];
+            let blogaddr = row['blogaddr'];
+            let githubaddr = row['githubaddr'];
+
+            document.getElementById("memberIntro").innerHTML="";
+
+            let temp = `
+            <div class="container">
+                <div class="row flex-lg-row-reverse align-items-center g-2 py-5">
+                    <div class="col-4">
+                        <img src="${image}"
+                        class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
+                        loading="lazy">
+                    </div>
+                    <div class="col-lg-8">
+                        <h1 class="display-0 fw-bold text-body-emphasis lh-0 mb-22">${membername}</h1>
+                        <p class="lead">${mbti}</p>
+                        <p class="lead">${comment}</p>
+                        <p class="lead">블로그  <a href="${blogaddr}"></a></p>
+                        <p class="lead">GitHub  <a href="${githubaddr}"></a></p>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            document.getElementById("memberIntro").innerHTML += temp;
+            */
         })
 
         //db 저장
@@ -221,7 +260,7 @@
 
             let temp_html = `
             <div class="col">
-                <div class="card">
+                <div class="card" id="membercard">
                     <img src="${image}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${membername}</h5>
@@ -308,13 +347,13 @@
     </div>
 
     <div class="mycards" id="mycards" style="display: none;">
-        <div id="card" class="row row-cols-1 row-cols-md-5 g-4">            
+        <div id="card" class="row row-cols-1 row-cols-md-5 g-4">
         </div>
     </div>
 
     <div class="memberIntro" id="memberIntro" style="display: none;">
         <div class="container">
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-2 py-5">
                 <div class="col-4">
                     <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
                         class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
