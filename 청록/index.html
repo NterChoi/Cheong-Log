@@ -57,7 +57,7 @@
             border-top: 1px solid white;
             border-bottom: 1px solid white;
         }
-        
+
         .menubtn:hover {
             background-color: rgb(0, 59, 110);
             border: 1px solid white;
@@ -181,7 +181,7 @@
             }
         })
 
-        $("#membercard").click(async function () {
+        $(document).on("click", "#membercard", function () {
             if (mi.style.display == 'none') {
                 mi.style.display = 'block';
             }
@@ -201,8 +201,8 @@
                 'membername': membername,
                 'mbti': mbti,
                 'comment': comment,
-                'blogaddr' : blogaddr,
-                'githubaddr' : githubaddr
+                'blogaddr': blogaddr,
+                'githubaddr': githubaddr
             };
             await addDoc(collection(db, "members"), doc);
             alert('저장 완료');
@@ -251,7 +251,7 @@
         <button class="menubtn" id="joinBtn">Join</button>
     </div>
 
-    
+
     <div class="joinbox" id="joinbox" style="display: none;">
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="image" placeholder="이미지링크">
@@ -308,17 +308,7 @@
     </div>
 
     <div class="mycards" id="mycards" style="display: none;">
-        <div id="card" class="row row-cols-1 row-cols-md-5 g-4">
-            <div class="col">
-                <div class="card" id="membercard">
-                    <img src="C:\Users\twr96\OneDrive\바탕 화면\sparta\청록\testimg.PNG" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">이름</h5>
-                        <p class="card-mbti">MBTI</p>
-                        <p class="card-text">한마디</p>
-                    </div>
-                </div>
-            </div>
+        <div id="card" class="row row-cols-1 row-cols-md-5 g-4">            
         </div>
     </div>
 
