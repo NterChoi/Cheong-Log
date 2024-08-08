@@ -21,9 +21,9 @@
             font-family: "Nanum Pen Script", cursive;
             font-size: 160px;
             font-weight: bold;
-            color: rgb(60, 219, 203);
+            color: rgb(0, 255, 157);
 
-            text-shadow: -2px 2px black,
+            text-shadow: -1px 1px black,
                 -2px -2px black,
                 2px 2px black,
                 2px -2px black;
@@ -31,7 +31,7 @@
         }
 
         .main {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mXrz51OJcWgpAFWwPgZD3wrfIsmLlZtMPwjBytEZt2XCZa3l0KydafoVYstFW15h7WA&usqp=CAU');
+            background-color:transparent;
             background-position: center;
             background-size: cover;
             height: 300px;
@@ -64,16 +64,22 @@
         }
 
         body {
-            background-color: rgb(44, 102, 102);
+            background-image: url('https://i.pinimg.com/originals/69/ec/0c/69ec0cebce71b1c8961efba6e81a64d7.gif');
+            background-position: auto;
+            background-size: cover;
+            z-index: -1;
+            
         }
 
-        .teamIntro {
-            background-color: rgba(127, 255, 212, 0.801);
-        }
 
         .memberIntro {
-            background-color: gray;
-            margin: auto 20px auto 20px;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/006/501/564/non_2x/blue-sky-background-with-clouds-and-sunlight-free-vector.jpg');
+            background-position: auto;
+            background-size: cover;
+            margin: 100px auto 100px auto;
+            position:relative;
+            border: 20px;
+            border-radius: 20px;
         }
 
         .mycards {
@@ -90,6 +96,17 @@
             padding: 20px 20px 20px 20px;
             border-radius: 5px;
             box-shadow: 0px 0px 3px 0px rgb(0, 255, 157);
+        }
+
+        .teamtitle{
+            color:greenyellow;
+            text-align: center;
+            background-color: green;
+            margin: 20px auto 20px auto;
+            border-radius: 20px;
+        }
+        .teamIntro{
+           color: rgb(0, 255, 157);
         }
     </style>
 
@@ -162,7 +179,6 @@
                     <div class="card-body">
                         <h5 class="card-title">${membername}</h5>
                         <p class="card-mbti">${mbti}</p>
-                        <p class="card-text">${comment}</p>
                     </div>
                 </div>
             </div>`;
@@ -181,8 +197,8 @@
                     <h1 class="display-0 fw-bold text-body-emphasis lh-0 mb-22">${membername}</h1>
                     <p class="lead">${mbti}</p>
                     <p class="lead">${comment}</p>
-                    <p class="lead">${blogaddr}</p>
-                    <p class="lead">${githubaddr}</p>
+                    <a style="font-size:24px">블로그:</a><a class="lead" href="${blogaddr}">${blogaddr}</a><br>
+                    <a style="font-size:24px">Git:</a><a class="lead" href="${githubaddr}">${githubaddr}</a>
                 </div>
             </div>
         </div>
@@ -346,15 +362,17 @@
         </div>
     </div>
 
+    <div class="memberIntro" id="memberIntros">
+    </div>
+
+
+    
     <div class="mycards" id="mycards" style="display: none;">
+        <h2 class="teamtitle">팀원 목록</h2>
         <div id="card" class="row row-cols-1 row-cols-md-5 g-4">
         </div>
     </div>
     </div>
-
-    <div class="memberIntro" id="memberIntros">
-    </div>
-
 </body>
 
 </html>
