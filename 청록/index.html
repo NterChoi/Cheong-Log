@@ -27,7 +27,6 @@
                 -2px -2px black,
                 2px 2px black,
                 2px -2px black;
-
         }
 
         .main {
@@ -52,8 +51,8 @@
             color: white;
             width: 33%;
             height: 72px;
+            margin: auto auto 1px auto;
             border-radius: 8px;
-            margin: 1px auto 1px 1px;
             border-top: 1px solid white;
             border-bottom: 1px solid white;
         }
@@ -71,16 +70,36 @@
             
         }
 
+        .layer-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        .teamIntro {
+            background-color: rgba(0, 122, 81, 0.473);
+        }
 
         .memberIntro {
             background-image: url('https://static.vecteezy.com/system/resources/previews/006/501/564/non_2x/blue-sky-background-with-clouds-and-sunlight-free-vector.jpg');
             background-position: auto;
             background-size: cover;
-            margin: 100px auto 100px auto;
+            margin: 15% 10% auto 10%;
             position:relative;
             border: 20px;
             border-radius: 20px;
+            border-style: ridge;
         }
+        .memberIntro>p {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
 
         .mycards {
             width: 1200px;
@@ -98,6 +117,14 @@
             box-shadow: 0px 0px 3px 0px rgb(0, 255, 157);
         }
 
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
         .teamtitle{
             color:greenyellow;
             text-align: center;
@@ -106,12 +133,13 @@
             border-radius: 20px;
         }
         .teamIntro{
-           color: rgb(0, 255, 157);
+           color: rgb(255, 255, 255);
+           text-shadow: 1px -1px rgb(0, 124, 93);
+           font-weight: 600;
         }
     </style>
 
     <script type="module">
-
 
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -142,6 +170,7 @@
         const mc = document.getElementById('mycards');
         let mi = document.getElementById('memberIntros');
         const jo = document.getElementById('joinbox');
+        const layerpopup = document.getElementById('layer-popup');
 
         //db 저장
         $("#sign-in-btn").click(async function () {
@@ -187,47 +216,55 @@
 
             let temp_html2 = `
             <div class="container" id = "memberintro${count}">
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                <div class="col-4">
-                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fae5d6bb4-5849-40a6-b477-b7f6a36aaa41%2FSpartaIconScale7.png?table=block&id=9ba13a8c-715f-4697-b979-d5c05280d2f7&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=250&userId=&cache=v2"
+                <div class="row flex-lg-row-reverse align-items-center g-3 py-2">
+                    <div class="col-4">
+                        <img src="${image}"
                         class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
                         loading="lazy">
+                    </div>
+                    <div class="col-8">
+                        <h1 class="display-0 fw-bold fs-1 text-body-emphasis lh-0">${membername}</h1>
+                        <p class="lead">${mbti}</p>
+                        <p class="lead">${comment}</p>
+                        <p class="lead"><a href="${blogaddr}" target="_blank" rel="noopener noreferrer">${blogaddr}<a></p>
+                        <p class="lead"><a href="${githubaddr}" target="_blank" rel="noopener noreferrer">${githubaddr}<a></p>
+                    </div>
                 </div>
-                <div class="col-lg-8">
-                    <h1 class="display-0 fw-bold text-body-emphasis lh-0 mb-22">${membername}</h1>
-                    <p class="lead">${mbti}</p>
-                    <p class="lead">${comment}</p>
-                    <a style="font-size:24px">블로그:</a><a class="lead" href="${blogaddr}">${blogaddr}</a><br>
-                    <a style="font-size:24px">Git:</a><a class="lead" href="${githubaddr}">${githubaddr}</a>
-                </div>
-            </div>
-        </div>
-        `;
+            </div>`;
             $('#memberIntros').append(temp_html2);
             count++;
         });
 
+        $(document).mouseup(function (e) {
+            var popup = $(".layer-popup");
+            if (popup.has(e.target).length === 0) {
+                layerpopup.style.display = 'none';
+            }
+        })
+
 
         $(document).ready(function () {
-            for (let i = 0; i < count; i++) {  
-                let x = document.getElementById('memberintro' + i);    
+            for (let i = 0; i < count; i++) {
+                let x = document.getElementById('memberintro' + i);
                 $("#membercard" + i).click(async function () {
+                    layerpopup.style.display = 'block';
+                    for (let i = 0; i < count; i++) {
+                        if (document.getElementById('memberintro' + i).style.display !== 'none') {
+                            document.getElementById('memberintro' + i).style.display = 'none';
+                        }
+                    }
                     if (x.style.display == 'none') {
                         x.style.display = 'block';
-                    }
-                    else {
-                        x.style.display = 'none';
                     }
                 });
             }
         });
 
-
         if (mc.style.display !== 'none') {
             mc.style.display = 'none';
         }
-        for(let i = 0 ; i < count; i++) {
-            if(document.getElementById('memberintro' + i).style.display !== 'none'){
+        for (let i = 0; i < count; i++) {
+            if (document.getElementById('memberintro' + i).style.display !== 'none') {
                 document.getElementById('memberintro' + i).style.display = 'none';
             }
         }
@@ -238,16 +275,17 @@
         if (jo.style.display !== 'none') {
             jo.style.display = 'none';
         }
+
         //메뉴 버튼 온클릭 이벤트 (각 항목 display속성 변경)
         $("#teamBtn").click(async function () {
             if (mc.style.display !== 'none') {
                 mc.style.display = 'none';
             }
-            for(let i = 0 ; i < count; i++) {
-            if(document.getElementById('memberintro' + i).style.display !== 'none'){
-                document.getElementById('memberintro' + i).style.display = 'none';
+            for (let i = 0; i < count; i++) {
+                if (document.getElementById('memberintro' + i).style.display !== 'none') {
+                    document.getElementById('memberintro' + i).style.display = 'none';
+                }
             }
-        }
             if (jo.style.display !== 'none') {
                 jo.style.display = 'none';
             }
@@ -259,11 +297,11 @@
             if (ti.style.display !== 'none') {
                 ti.style.display = 'none';
             }
-            for(let i = 0 ; i < count; i++) {
-            if(document.getElementById('memberintro' + i).style.display !== 'none'){
-                document.getElementById('memberintro' + i).style.display = 'none';
+            for (let i = 0; i < count; i++) {
+                if (document.getElementById('memberintro' + i).style.display !== 'none') {
+                    document.getElementById('memberintro' + i).style.display = 'none';
+                }
             }
-        }
             if (jo.style.display !== 'none') {
                 jo.style.display = 'none';
             }
@@ -275,11 +313,11 @@
             if (ti.style.display !== 'none') {
                 ti.style.display = 'none';
             }
-            for(let i = 0 ; i < count; i++) {
-            if(document.getElementById('memberintro' + i).style.display !== 'none'){
-                document.getElementById('memberintro' + i).style.display = 'none';
+            for (let i = 0; i < count; i++) {
+                if (document.getElementById('memberintro' + i).style.display !== 'none') {
+                    document.getElementById('memberintro' + i).style.display = 'none';
+                }
             }
-        }
             if (mc.style.display !== 'none') {
                 mc.style.display = 'none';
             }
@@ -349,29 +387,25 @@
                 <div class="col-lg-8">
                     <h1 class="display-1 fw-bold">청 록</h1>
                     <p class="display-4">Ground Rules</p>
-                    <p class="lead">- 소통 잘하고 상처 받는 말 하지 말기.</p>
-                    <p class="lead">- 피드백을 요청하면 긍정/부정에 관계 없이 확실하게 답변하기.
-                    </p>
-                    <p class="lead">- 누구 한명이라도 모르는 것이 있으면 짚고 넘어가기.
-                    </p>
-                    <p class="lead">- 모르는 내용이 있다면 제일 먼저 검색 후 그래도 모른다면 튜터님 혹은 팀원에게 물어보기.
-                    </p>
-                    <p class="lead">- 정보 공유를 잘하기.</p>
+                    <p class="lead">* 소통 잘하고 상처 받는 말 하지 말기.</p>
+                    <p class="lead">* 피드백을 요청하면 긍정/부정에 관계 없이 확실하게 답변하기.</p>
+                    <p class="lead">* 누구 한명이라도 모르는 것이 있으면 짚고 넘어가기.</p>
+                    <p class="lead">* 모르는 내용이 있다면 제일 먼저 검색 후 그래도 모른다면 튜터님 혹은 팀원에게 물어보기.</p>
+                    <p class="lead">* 정보 공유를 잘하기.</p>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="memberIntro" id="memberIntros">
-    </div>
-
-
     
     <div class="mycards" id="mycards" style="display: none;">
-        <h2 class="teamtitle">팀원 목록</h2>
+        <h2 class="teamtitle">팀   원</h2>
         <div id="card" class="row row-cols-1 row-cols-md-5 g-4">
         </div>
     </div>
+
+    <div class="layer-popup show" id="layer-popup">
+        <div class="memberIntro" id="memberIntros">
+        </div>
     </div>
 </body>
 
