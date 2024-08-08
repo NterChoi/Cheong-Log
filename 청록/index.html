@@ -126,63 +126,6 @@
         const mi = document.getElementById('memberIntro');
         const jo = document.getElementById('joinbox');
 
-        if (mc.style.display !== 'none') {
-            mc.style.display = 'none';
-        }
-        if (mi.style.display !== 'none') {
-            mi.style.display = 'none';
-        }
-        if (ti.style.display == 'none') {
-
-            ti.style.display = 'block';
-        }
-        if (jo.style.display !== 'none') {
-            jo.style.display = 'none';
-        }
-        //메뉴 버튼 온클릭 이벤트 (각 항목 display속성 변경)
-        $("#teamBtn").click(async function () {
-            if (mc.style.display !== 'none') {
-                mc.style.display = 'none';
-            }
-            if (mi.style.display !== 'none') {
-                mi.style.display = 'none';
-            }
-            if (jo.style.display !== 'none') {
-                jo.style.display = 'none';
-            }
-            if (ti.style.display == 'none') {
-                ti.style.display = 'block';
-            }
-        })
-        $("#memberBtn").click(async function () {
-            if (ti.style.display !== 'none') {
-                ti.style.display = 'none';
-            }
-            if (mi.style.display !== 'none') {
-                mi.style.display = 'none';
-            }
-            if (jo.style.display !== 'none') {
-                jo.style.display = 'none';
-            }
-            if (mc.style.display == 'none') {
-                mc.style.display = 'block';
-            }
-        })
-        $("#joinBtn").click(async function () {
-            if (ti.style.display !== 'none') {
-                ti.style.display = 'none';
-            }
-            if (mi.style.display !== 'none') {
-                mi.style.display = 'none';
-            }
-            if (mc.style.display !== 'none') {
-                mc.style.display = 'none';
-            }
-            if (jo.style.display == 'none') {
-                jo.style.display = 'block';
-            }
-        })
-
         //db 저장
         $("#sign-in-btn").click(async function () {
             let image = $('#image').val();
@@ -252,10 +195,71 @@
             for(let i = 0 ; i < count; i++) {
                 $("#membercard" + i).click(async function () {
                 if (mi.style.display == 'none') {
-                mi.style.display = 'block';
-              }});
+                   mi.style.display = 'block';
+                }
+                else {
+                    mi.style.display = 'none';
+                }
+            });
             }         
         });
+
+        if (mc.style.display !== 'none') {
+            mc.style.display = 'none';
+        }
+        if (mi.style.display !== 'none') {
+            mi.style.display = 'none';
+        }
+        if (ti.style.display == 'none') {
+
+            ti.style.display = 'block';
+        }
+        if (jo.style.display !== 'none') {
+            jo.style.display = 'none';
+        }
+        //메뉴 버튼 온클릭 이벤트 (각 항목 display속성 변경)
+        $("#teamBtn").click(async function () {
+            if (mc.style.display !== 'none') {
+                mc.style.display = 'none';
+            }
+            if (mi.style.display !== 'none') {
+                mi.style.display = 'none';
+            }
+            if (jo.style.display !== 'none') {
+                jo.style.display = 'none';
+            }
+            if (ti.style.display == 'none') {
+                ti.style.display = 'block';
+            }
+        })
+        $("#memberBtn").click(async function () {
+            if (ti.style.display !== 'none') {
+                ti.style.display = 'none';
+            }
+            if (mi.style.display !== 'none') {
+                mi.style.display = 'none';
+            }
+            if (jo.style.display !== 'none') {
+                jo.style.display = 'none';
+            }
+            if (mc.style.display == 'none') {
+                mc.style.display = 'block';
+            }
+        })
+        $("#joinBtn").click(async function () {
+            if (ti.style.display !== 'none') {
+                ti.style.display = 'none';
+            }
+            if (mi.style.display !== 'none') {
+                mi.style.display = 'none';
+            }
+            if (mc.style.display !== 'none') {
+                mc.style.display = 'none';
+            }
+            if (jo.style.display == 'none') {
+                jo.style.display = 'block';
+            }
+        })
     </script>
 </head>
 
@@ -333,15 +337,6 @@
 
     <div class="mycards" id="mycards" style="display: none;">
         <div id="card" class="row row-cols-1 row-cols-md-5 g-4">
-            <div class="col">
-                <div class="card" id="membercard">
-                    <img src="C:\Users\twr96\OneDrive\바탕 화면\sparta\청록\testimg.PNG" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">이름</h5>
-                        <p class="card-mbti">MBTI</p>
-                        <p class="card-text">한마디</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
